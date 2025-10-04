@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const client = await clientPromise;
-    const db = client.db("test");
+    const db = client.db("train_guide");
     const collections = await db.listCollections().toArray();
 
     return NextResponse.json({ success: true, collections });
