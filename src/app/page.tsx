@@ -1,7 +1,8 @@
+import { Button } from "@/components/ui/button";
 export default function Home() {
   return (
-    <div className="flex justify-center items-center ">
-      HOME
+    <div className="flex justify-center items-center h-screen">
+      <Button>CLICK ME</Button>
     </div>
   );
 }
