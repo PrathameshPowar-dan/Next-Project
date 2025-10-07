@@ -46,30 +46,35 @@ const UserDropdown = () => {
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 top-full mt-2 w-48 py-2 bg-gray-800 border border-gray-600 rounded-xl shadow-xl backdrop-blur-md">
+                <div className="absolute right-0 top-full mt-2 w-48 py-2 bg-gray-800 border border-gray-600 rounded-xl shadow-xl backdrop-blur-md z-50">
                     <div className="px-4 py-2 border-b border-gray-700">
                         <p className="text-sm font-medium text-white">{user.name}</p>
                         <p className="text-xs text-gray-400">Premium Member</p>
                     </div>
 
-                    <Link href='/profile'>
+                    <Link href='/profile' onClick={() => setIsOpen(false)}>
                         <button className="w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 transition-colors">
                             Profile
                         </button>
                     </Link>
-                    <Link href="/premium">
-                        <button className="w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 transition-colors">
+
+                    <Link href="/premium" onClick={() => setIsOpen(false)}>
+                        <button className="w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 transition-colors md:hidden">
                             Premium
                         </button>
                     </Link>
-                    <Link href="/watchlist">
-                        <button className="w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 transition-colors">
-                            Watchlist
+
+                    <Link href="/dashboard" onClick={() => setIsOpen(false)}>
+                        <button className="w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 transition-colors md:hidden">
+                            Dashboard
                         </button>
                     </Link>
 
                     <div className="border-t border-gray-700 mt-2 pt-2">
-                        <button className="w-full px-4 py-2 text-left text-sm text-red-400 hover:bg-gray-700 transition-colors">
+                        <button
+                            onClick={handleSignout}
+                            className="w-full px-4 py-2 text-left text-sm text-red-400 hover:bg-gray-700 transition-colors"
+                        >
                             Sign Out
                         </button>
                     </div>
