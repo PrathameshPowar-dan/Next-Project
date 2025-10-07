@@ -1,8 +1,10 @@
-import { Button } from "@/components/ui/button";
+import Header from "@/components/Header";
 export default function Home() {
   return (
-    <div className="flex justify-center items-center h-screen">
-      <Button>CLICK ME</Button>
-    </div>
+    <>
+      <Header />
+      <div className="flex justify-center items-center h-screen">
+      </div>
+    </>
   );
 }
