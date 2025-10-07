@@ -1,49 +1,74 @@
-import Header from "@/components/Header";
 import ChartWidget from "@/components/ChartWidget";
-import { MARKET_OVERVIEW_WIDGET_CONFIG } from "@/lib/constants";
+import Header from "@/components/Header";
+import {
+  HEATMAP_WIDGET_CONFIG,
+  MARKET_DATA_WIDGET_CONFIG,
+  MARKET_OVERVIEW_WIDGET_CONFIG,
+  TOP_STORIES_WIDGET_CONFIG
+} from "@/lib/constants";
 
-export default function Home() {
+const Home = () => {
+  const scriptUrl = `https://s3.tradingview.com/external-embedding/embed-widget-`;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <Header />
 
-      <main className="container mx-auto px-4 sm:px-6 py-8">
-        <section className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">
-            Welcome to <span className="bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">IndSTOCKS</span>
-          </h1>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-            Real-time market data, advanced charts, and professional trading tools at your fingertips.
-          </p>
+      <main className="container mx-auto px-4 sm:px-6 py-6">
+        <section className="h-[35vh] flex flex-col justify-center items-center mb-12 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-5xl sm:text-6xl font-bold text-white mb-6 leading-tight">
+              Welcome to <span className="bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">IndSTOCKS</span>
+            </h1>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+              Real-time market data, advanced charts, and professional trading tools at your fingertips.
+            </p>
+
+          </div>
         </section>
 
-        <section className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
-          <ChartWidget
-            title="Stock Heatmap"
-            scriptUrl="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js"
-            config={MARKET_OVERVIEW_WIDGET_CONFIG}
-            height={600}
-            className="custom-chart"
-          />
+        <section className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
+          <div className="xl:col-span-2">
+            <ChartWidget
+              title="Market Overview"
+              scriptUrl={`${scriptUrl}market-overview.js`}
+              config={MARKET_OVERVIEW_WIDGET_CONFIG}
+              className="custom-chart"
+              height={500}
+            />
+          </div>
+          <div className="xl:col-span-1">
+            <ChartWidget
+              title="Stock Heatmap"
+              scriptUrl={`${scriptUrl}stock-heatmap.js`}
+              config={HEATMAP_WIDGET_CONFIG}
+              height={500}
+            />
+          </div>
+        </section>
 
-          <ChartWidget
-            title="Stock Heatmap"
-            scriptUrl="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js"
-            config={MARKET_OVERVIEW_WIDGET_CONFIG}
-            height={600}
-            className="custom-chart"
-          />
-
-          <ChartWidget
-            title="Technical Analysis"
-            scriptUrl="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js"
-            config={MARKET_OVERVIEW_WIDGET_CONFIG}
-            height={600}
-            className="custom-chart"
-          />
+        <section className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <div className="xl:col-span-1">
+            <ChartWidget
+              title="Market News"
+              scriptUrl={`${scriptUrl}timeline.js`}
+              config={TOP_STORIES_WIDGET_CONFIG}
+              height={500}
+            />
+          </div>
+          <div className="xl:col-span-2">
+            <ChartWidget
+              title="Live Quotes"
+              scriptUrl={`${scriptUrl}market-quotes.js`}
+              config={MARKET_DATA_WIDGET_CONFIG}
+              height={500}
+            />
+          </div>
         </section>
 
       </main>
     </div>
-  );
+  )
 }
+
+export default Home;
