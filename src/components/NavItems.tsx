@@ -31,9 +31,6 @@ const NavItems = () => {
                     `}
                 >
                     {label}
-                    {isActive(href) && (
-                        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full" />
-                    )}
                 </Link>
             ))}
         </div>
