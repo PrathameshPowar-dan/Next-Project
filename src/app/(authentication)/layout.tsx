@@ -2,13 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import React from "react";
 
-const Layout = async () => {
+const Layout = async ({children}:{children: React.ReactNode}) => {
 
 
     return (
         <main className="auth-layout">
-            <section className="auth-left-section scrollbar-hide-default flex items-center justify-between p-3">
+            <section className="auth-left-section scrollbar-hide-default flex items-center p-3">
                 <Link
                     href="/"
                     className="flex items-center gap-3 group"
@@ -31,6 +32,7 @@ const Layout = async () => {
                         <span className="text-xs text-gray-400 -mt-1">Live Markets</span>
                     </div>
                 </Link>
+                <div>{children}</div>
             </section>
 
             <section className="auth-right-section">
