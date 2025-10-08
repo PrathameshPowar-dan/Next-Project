@@ -9,7 +9,7 @@ const Layout = async ({children}:{children: React.ReactNode}) => {
 
     return (
         <main className="auth-layout">
-            <section className="auth-left-section scrollbar-hide-default flex items-center p-3">
+            <section className="auth-left-section scrollbar-hide-default flex items-center justify-center-safe p-3">
                 <Link
                     href="/"
                     className="flex items-center gap-3 group"
@@ -32,7 +32,7 @@ const Layout = async ({children}:{children: React.ReactNode}) => {
                         <span className="text-xs text-gray-400 -mt-1">Live Markets</span>
                     </div>
                 </Link>
-                <div>{children}</div>
+                <div className="mt-5">{children}</div>
             </section>
 
             <section className="auth-right-section">

@@ -36,13 +36,13 @@ const SignUP = () => {
 
   return (
     <>
-      <h1 className="form-title">Sign Up & Personalize</h1>
+      <p className="text-2xl font-bold text-center text-gray-100 mt-2.5 mb-5.5 border p-5 rounded-2xl">Sign Up & Details</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <InputField
           name="fullName"
           label="Full Name"
-          placeholder="John Doe"
+          placeholder="Jane Doe"
           register={register}
           error={errors.fullName}
           validation={{ required: 'Full name is required', minLength: 2 }}
@@ -51,7 +51,7 @@ const SignUP = () => {
         <InputField
           name="email"
           label="Email"
-          placeholder="contact@jsmastery.com"
+          placeholder="contact@gmail.com"
           register={register}
           error={errors.email}
           validation={{ required: 'Email name is required', pattern: /^\w+@\w+\.\w+$/, message: 'Email address is required' }}
@@ -64,7 +64,7 @@ const SignUP = () => {
           type="password"
           register={register}
           error={errors.password}
-          validation={{ required: 'Password is required', minLength: 8 }}
+          validation={{ required: 'Password is required', minLength: 6 }}
         />
 
         <CountrySelectField
@@ -105,7 +105,7 @@ const SignUP = () => {
           required
         />
 
-        <Button type="submit" disabled={isSubmitting} className="yellow-btn w-full mt-5">
+        <Button type="submit" disabled={isSubmitting} className="orange-btn w-full mt-5">
           {isSubmitting ? 'Creating Account' : 'Start Your Investing Journey'}
         </Button>
 
