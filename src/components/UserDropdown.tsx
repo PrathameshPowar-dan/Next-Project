@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 
-const UserDropdown = () => {
+const UserDropdown = ({ user }: { user: User }) => {
     const [isOpen, setIsOpen] = useState(false)
     const dropdownRef = useRef<HTMLDivElement>(null)
     const router = useRouter();
@@ -24,7 +24,7 @@ const UserDropdown = () => {
         router.push("/sign-in")
     }
 
-    const user = { name: "dan", email: "dan@gmail.com" }
+
 
     return (
         <div className="relative" ref={dropdownRef}>

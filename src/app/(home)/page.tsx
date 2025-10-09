@@ -1,18 +1,33 @@
 import ChartWidget from "@/components/ChartWidget";
 import Header from "@/components/Header";
+import { auth } from "@/lib/better-auth/auth";
 import {
   HEATMAP_WIDGET_CONFIG,
   MARKET_DATA_WIDGET_CONFIG,
   MARKET_OVERVIEW_WIDGET_CONFIG,
   TOP_STORIES_WIDGET_CONFIG
 } from "@/lib/constants";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-const Home = () => {
+const Home = async () => {
   const scriptUrl = `https://s3.tradingview.com/external-embedding/embed-widget-`;
+
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  if (!session) {
+    redirect('/sign-IN')
+  }
+
+  const user = {
+    id: session.user.id,
+    name: session.user.name,
+    email: session.user.email,
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <Header />
+      <Header user={user} />
 
       <main className="container mx-auto px-4 sm:px-6 py-6">
         <section className="h-[35vh] flex flex-col justify-center items-center mb-12 text-center">

@@ -3,7 +3,7 @@ import Image from "next/image";
 import NavItems from "@/components/NavItems";
 import UserDropdown from "@/components/UserDropdown";
 
-const Header = () => {
+const Header = ({user}:{user: User}) => {
     return (
         <header className="sticky top-0 bg-gray-900/80 backdrop-blur-xl border-b border-gray-700/50 z-50">
             <div className="container mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
@@ -35,7 +35,7 @@ const Header = () => {
                 </nav>
 
                 <div className="flex items-center gap-4">
-                    <UserDropdown />
+                    <UserDropdown user={user}/>
                 </div>
             </div>
         </header>

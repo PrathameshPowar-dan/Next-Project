@@ -1,16 +1,20 @@
-import { success } from "better-auth";
-import { inngest } from "./client";
-import { PERSONALIZED_WELCOME_EMAIL_PROMPT } from "./prompts";
+import { inngest } from "@/lib/Inngest/client";
+import { PERSONALIZED_WELCOME_EMAIL_PROMPT } from "@/lib/Inngest/prompts";
+import { sendWelcomeEmail } from "@/lib/nodemailer";
+// import {getAllUsersForNewsEmail} from "@/lib/actions/user.actions";
+// import { getWatchlistSymbolsByEmail } from "@/lib/actions/watchlist.actions";
+// import { getNews } from "@/lib/actions/finnhub.actions";
+// import { getFormattedTodayDate } from "@/lib/utils";
 
 export const sendSignUpEmail = inngest.createFunction(
-    { id: "Sign-up-email" },
+    { id: 'sign-up-email' },
     { event: 'app/user.created' },
     async ({ event, step }) => {
         const userProfile = `
-        - Country: ${event.data.country}
-        - Investment Goals: ${event.data.investmentGoals}
-        - Risk Tolerance: ${event.data.riskTolerance}
-        - Preferred Industry: ${event.data.preferredIndustry}
+            - Country: ${event.data.country}
+            - Investment goals: ${event.data.investmentGoals}
+            - Risk tolerance: ${event.data.riskTolerance}
+            - Preferred industry: ${event.data.preferredIndustry}
         `
 
         const prompt = PERSONALIZED_WELCOME_EMAIL_PROMPT.replace('{{userProfile}}', userProfile)
@@ -31,13 +35,15 @@ export const sendSignUpEmail = inngest.createFunction(
         await step.run('send-welcome-email', async () => {
             const part = response.candidates?.[0]?.content?.parts?.[0];
             const introText = (part && 'text' in part ? part.text : null) || 'Thanks for joining Signalist. You now have the tools to track markets and make smarter moves.'
-        
 
+            const { data: { email, name } } = event;
+
+            return await sendWelcomeEmail({ email, name, intro: introText });
         })
 
-        return{
+        return {
             success: true,
-            message: "Email Sent successfully"
+            message: 'Welcome email sent successfully'
         }
     }
 )
