@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { signOut } from '@/lib/actions/auth_actions';
 
 const UserDropdown = ({ user }: { user: User }) => {
     const [isOpen, setIsOpen] = useState(false)
@@ -21,7 +22,8 @@ const UserDropdown = ({ user }: { user: User }) => {
     }, [])
 
     const handleSignout = async () => {
-        router.push("/sign-in")
+        await signOut();
+        router.push("/sign-IN")
     }
 
 

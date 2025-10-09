@@ -15,7 +15,7 @@ const Home = async () => {
 
   const session = await auth.api.getSession({ headers: await headers() });
 
-  if (!session) {
+  if (!session?.user) {
     redirect('/sign-IN')
   }
 
@@ -24,6 +24,7 @@ const Home = async () => {
     name: session.user.name,
     email: session.user.email,
   }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
