@@ -260,7 +260,7 @@ export const NEWS_SUMMARY_EMAIL_TEMPLATE = `<!DOCTYPE html>
                     <!-- Header with Logo -->
                     <tr>
                         <td align="left" class="mobile-header-padding" style="padding: 40px 40px 20px 40px;">
-                            <img src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" alt="IndSTOCKS Logo" width="150" style="max-width: 100%; height: auto;">
+                            <img src="https://res.cloudinary.com/dpyttzuvx/image/upload/v1760032287/IndSTOCKS-10-09-2025_11_20_PM_rztlqx.png" alt="IndSTOCKS Logo" width="150" style="max-width: 100%; height: auto;">
                         </td>
                     </tr>
                     
