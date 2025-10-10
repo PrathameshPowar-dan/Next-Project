@@ -1,6 +1,7 @@
 import { inngest } from "@/lib/Inngest/client";
 import { PERSONALIZED_WELCOME_EMAIL_PROMPT } from "@/lib/Inngest/prompts";
 import { sendWelcomeEmail } from "@/lib/nodemailer";
+import { getAllUsersForNewsEmail } from "../actions/user_actions";
 // import {getAllUsersForNewsEmail} from "@/lib/actions/user.actions";
 // import { getWatchlistSymbolsByEmail } from "@/lib/actions/watchlist.actions";
 // import { getNews } from "@/lib/actions/finnhub.actions";
@@ -44,6 +45,18 @@ export const sendSignUpEmail = inngest.createFunction(
         return {
             success: true,
             message: 'Welcome email sent successfully'
+        }
+    }
+)
+
+export const sendDailyNewsSummary = inngest.createFunction(
+    { id: "daily-news-summary" },
+    [{ event: "app/send.daily.news" }, { cron: '0 12 * * *' }],
+    async ({ event, step }) => {
+        const users = await step.run('get-all-users',getAllUsersForNewsEmail)
+
+        if (!users || users.length===0) {
+            return {success: false,message:"No Users found"}
         }
     }
 )
