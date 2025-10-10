@@ -1,89 +1,73 @@
-'use client'
+'use client';
 
-import { useRouter } from 'next/navigation'
-import { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
-import { signOut } from '@/lib/actions/auth_actions';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
+import NavItems from "@/components/NavItems";
+import { signOut } from "@/lib/actions/auth_actions";
 
-const UserDropdown = ({ user }: { user: User }) => {
-    const [isOpen, setIsOpen] = useState(false)
-    const dropdownRef = useRef<HTMLDivElement>(null)
+const UserDropdown = ({ user, initialStocks }: { user: User, initialStocks: StockWithWatchlistStatus[] }) => {
     const router = useRouter();
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsOpen(false)
-            }
-        }
-
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [])
-
-    const handleSignout = async () => {
+    const handleSignOut = async () => {
         await signOut();
-        router.push("/sign-IN")
+        router.push("/sign-in");
     }
 
-
-
     return (
-        <div className="relative" ref={dropdownRef}>
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-2 p-1 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-600 transition-colors"
-            >
-                <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">{user.name[0].toLocaleUpperCase()}</span>
-                </div>
-                <svg
-                    className={`w-4 h-4 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-
-            {isOpen && (
-                <div className="absolute right-0 top-full mt-2 w-48 py-2 bg-gray-800 border border-gray-600 rounded-xl shadow-xl backdrop-blur-md z-50">
-                    <div className="px-4 py-2 border-b border-gray-700">
-                        <p className="text-sm font-medium text-white">{user.name}</p>
-                        <p className="text-xs text-gray-400">Premium Member</p>
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center gap-3 text-gray-4 hover:text-yellow-500">
+                    <Avatar className="h-8 w-8">
+                        <AvatarImage src="/assets/images/user.png" />
+                        <AvatarFallback className="bg-yellow-500 text-yellow-900 text-sm font-bold">
+                            {user.name[0]}
+                        </AvatarFallback>
+                    </Avatar>
+                    <div className="hidden md:flex flex-col items-start">
+                        <span className='text-base font-medium text-gray-400'>
+                            {user.name}
+                        </span>
                     </div>
-
-                    <Link href='/profile' onClick={() => setIsOpen(false)}>
-                        <button className="w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 transition-colors">
-                            Profile
-                        </button>
-                    </Link>
-
-                    <Link href="/premium" onClick={() => setIsOpen(false)}>
-                        <button className="w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 transition-colors md:hidden">
-                            Premium
-                        </button>
-                    </Link>
-
-                    <Link href="/dashboard" onClick={() => setIsOpen(false)}>
-                        <button className="w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 transition-colors md:hidden">
-                            Dashboard
-                        </button>
-                    </Link>
-
-                    <div className="border-t border-gray-700 mt-2 pt-2">
-                        <button
-                            onClick={handleSignout}
-                            className="w-full px-4 py-2 text-left text-sm text-red-400 hover:bg-gray-700 transition-colors"
-                        >
-                            Sign Out
-                        </button>
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="text-gray-400">
+                <DropdownMenuLabel>
+                    <div className="flex relative items-center gap-3 py-2">
+                        <Avatar className="h-10 w-10">
+                            <AvatarImage src="/assets/images/user.png" />
+                            <AvatarFallback className="bg-yellow-500 text-yellow-900 text-sm font-bold">
+                                {user.name[0]}
+                            </AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col">
+                            <span className='text-base font-medium text-gray-400'>
+                                {user.name}
+                            </span>
+                            <span className="text-sm text-gray-500">{user.email}</span>
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-gray-600" />
+                <DropdownMenuItem onClick={handleSignOut} className="text-gray-100 bg-red-500 mb-2 flex justify-center items-center text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
+                    <LogOut color="black" className="h-4 w-4 mr-2" />
+                    Logout
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="hidden sm:block bg-gray-600" />
+                <nav className="sm:hidden flex justify-center items-center">
+                    <NavItems initialStocks={initialStocks} />
+                </nav>
+            </DropdownMenuContent>
+        </DropdownMenu>
     )
 }
-
 export default UserDropdown
