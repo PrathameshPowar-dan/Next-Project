@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import useTradingViewWidget from "@/hooks/TradingViewWidgets"
 import { cn } from "@/lib/utils";
 
@@ -17,6 +17,11 @@ const TradingViewWidget = ({ title, scriptUrl, config, height = 500, className, 
     const [isLoading, setIsLoading] = useState(true);
     const containerRef = useTradingViewWidget(scriptUrl, config, height);
 
+    useEffect(() => {
+        if (containerRef) {
+            setIsLoading(false)
+        }
+    }, [containerRef])
 
 
     return (
